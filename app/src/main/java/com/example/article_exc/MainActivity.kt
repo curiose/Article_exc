@@ -16,8 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.Image
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextAlign.Companion.Justify
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -33,11 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Article_excTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) {
-                    ComposeArticleImage(
-                        title = stringResource(R.string.title),
-                        text_1 = stringResource(R.string.text_1),
-                        text_2 = stringResource(R.string.text_2),
-                    )
+                    ComposeArticle()
                 }
             }
         }
@@ -45,55 +43,42 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ComposeArticleText(
-    title: String,
-    text_1: String,
-    text_2: String,
-    modifier: Modifier = Modifier
-) {
-    Column {
-        Text(
-            text = title,
-            fontSize = 24.sp,
-        )
-        Text(
-            text = text_1,
-        )
-        Text(
-            text = text_2,
-        )
-    }
+fun ComposeArticle() {
+    ArticleCard(
+        title = stringResource(R.string.title),
+        text_1 = stringResource(R.string.text_1),
+        text_2 = stringResource(R.string.text_2),
+        imagePainter = painterResource(R.drawable.bg_compose_background),
+    )
 }
 
 @Composable
-fun ComposeArticleImage(
+private fun ArticleCard(
     title: String,
     text_1: String,
     text_2: String,
+    imagePainter: Painter,
     modifier: Modifier = Modifier,
-    padding: Dp = 16.dp
 ) {
-    val image = painterResource(R.drawable.bg_compose_background)
-    Column {
+    Column(modifier = Modifier) {
         Image(
-            painter = image,
+            painter = imagePainter,
             contentDescription = null,
         )
         Text(
             text = title,
-            modifier = Modifier
-                .padding(16.dp)
+            fontSize = 24.sp,
+            modifier = Modifier.padding(16.dp),
         )
         Text(
             text = text_1,
-            modifier = Modifier.padding(start = padding, end = padding),
-            textAlign = Justify,
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+            textAlign = TextAlign.Justify,
         )
         Text(
             text = text_2,
-            modifier = Modifier
-                .padding(16.dp),
-            textAlign = Justify
+            modifier = Modifier.padding(16.dp),
+            textAlign = TextAlign.Justify,
         )
     }
 }
@@ -103,10 +88,6 @@ fun ComposeArticleImage(
 @Composable
 fun GreetingPreview() {
     Article_excTheme {
-        ComposeArticleImage(
-            title = stringResource(R.string.title),
-            text_1 = stringResource(R.string.text_1),
-            text_2 = stringResource(R.string.text_2)
-        )
+        ComposeArticle()
     }
 }
